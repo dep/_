@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>2021-12-09</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<p>Links: [[Journal]] [[Titan Development]]</p>
+<hr />
+<h1 id="getting-titan-into-invocaweb">2021-12-09: Getting Titan into Invoca/WEB</h1>
+<p>9:00 Currently struggling with integrating the new <code>@invoca/titan-feature-administration</code> package in to Invoca/WEB.</p>
+<p>I am running in to Webpack errors after installing the new dependency. What’s strange is that the webpack errors seem to be wholly unrelated to the package itself. Perhaps, though, a singular error within the machinations of the Titan dependency can cause a chain-reaction to the rest of the Webpack stack.</p>
+<p>I’ve been going through a number of trial-and-error type attempts to resolve this.</p>
+<p>First, I was linking to the dependency relatively through the Invoca/WEB <code>package.json</code> file, using this method:</p>
+<pre><code>&quot;@invoca/titan-feature-administration&quot;: &quot;file:../Titan/etc&quot;</code></pre>
+<p>9:30 I had the suspicion that it was perhaps something NPM was doing which was causing the failures, so I instead opted to publish the package on the Titan side to promote <code>0.0.2</code> to the registry.</p>
+<p>Unfortunately installing the published version of the package has resulted in the same errors.</p>
+<p>Simply adding the dependency to <code>package.json</code>, and nothing else, causes a stack of failures like this one:</p>
+<pre><code>    ERROR in ./client/user_management/styles/styles.module.scss (./node_modules/css-loader/dist/cjs.js??ref--9-1!./node_modules/postcss-loader/src??ref--9-2!./node_modules/sass-loader/dist/cjs.js??ref--9-3!./client/user_management/styles/styles.module.scss)
+    Module build failed (from ./node_modules/css-loader/dist/cjs.js):
+    ValidationError: Invalid options object. CSS Loader has been initialized using an options object that does not match the API schema.
+     - options has an unknown property &#39;camelCase&#39;. These properties are valid:
+       object { url?, import?, modules?, sourceMap?, importLoaders?, localsConvention?, onlyLocals?, esModule? }
+        at validate (/Users/dpeck/invoca/web/node_modules/css-loader/node_modules/schema-utils/dist/validate.js:98:11)
+        at Object.loader (/Users/dpeck/invoca/web/node_modules/css-loader/dist/index.js:36:28)
+ℹ ｢wdm｣: Failed to compile.</code></pre>
+<p>10:00 Reverting local changes to <code>yarn.lock</code>, of which there were several for unknown reasons doesn’t fix things either.</p>
+<p>Removing the new dependency from <code>package.json</code>, the <code>@invoca</code> folder in <code>node_modules</code>, as well as reverting the local <code>yarn.lock</code> does fix the webpack.</p>
+<p>10:50 Now I’m going to diff the folder contents of <code>node_modules</code> both before and after installing the new Titan app. My new suspicion is this is somehow related to the React v17.x <code>peerDependencies</code> defined on the Titan side.</p>
+<p>10:58 Directory differences were neglegible.</p>
+<p>10:59 Progress! Removing the <code>peerDependencies</code> as they were defined on the Titan side seems to clear up this issue, but what new problems might this create?</p>
+<p>Moving forward with my Hello World.</p>
+<p>11:15 Some progress made. I created the controller/model/route logic on the Invoca/WEB side, and I’m currently working on the actual code to import the new React package in to the <code>erb</code>. Currently hitting the following problem:</p>
+<pre><code>ERROR in ./node_modules/@invoca/titan-feature-administration/src/components/App.jsx 4:30
+Module parse failed: Unexpected token (4:30)
+You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+| import PropTypes from &quot;prop-types&quot;;
+|
+&gt; const App = ({ children }) =&gt; &lt;div&gt;{children}&lt;/div&gt;;
+|
+| App.propTypes = {}</code></pre>
+<p>I suspect that this is related to the <code>jsx</code> naming convention on the Titan side. Renaming these files to .js to see what happens.</p>
+<p>11:27 I think my suspicion was correct. I finished renaming the entirety of the <code>Titan</code> repo from using <code>*.jsx</code> to <code>*.js</code>, just to make for better compatibility with babel on the Invoca/WEB side.</p>
+<p>Upon restarting <code>rails s</code> on the Invoca/WEB side, I’m running in to the following issues:</p>
+<pre><code>yarn check v1.19.1
+error &quot;@storybook/addon-docs#@mdx-js/mdx#@babel/plugin-syntax-object-rest-spread&quot; is wrong version: expected &quot;7.2.0&quot;, got &quot;7.8.3&quot;
+error &quot;@storybook/addon-docs#@mdx-js/mdx#@babel/core#@babel/types#@babel/helper-validator-identifier&quot; not installed
+error &quot;@storybook/addon-docs#@mdx-js/mdx#babel-plugin-apply-mdx-type-prop#@babel/helper-plugin-utils&quot; is wrong version: expected &quot;7.0.0&quot;, got &quot;7.10.4&quot;
+error &quot;@storybook/addon-docs#@mdx-js/mdx#remark-mdx#@babel/helper-plugin-utils&quot; is wrong version: expected &quot;7.0.0&quot;, got &quot;7.10.4&quot;
+error &quot;@storybook/addon-docs#@mdx-js/mdx#remark-mdx#@babel/plugin-proposal-object-rest-spread&quot; is wrong version: expected &quot;7.6.2&quot;, got &quot;7.12.1&quot;
+error &quot;@storybook/addon-docs#@mdx-js/mdx#remark-mdx#@babel/plugin-syntax-jsx&quot; is wrong version: expected &quot;7.2.0&quot;, got &quot;7.12.1&quot;
+error &quot;@storybook/addon-docs#@mdx-js/mdx#@babel/core#@babel/code-frame#@babel/highlight&quot; is wrong version: expected &quot;^7.16.0&quot;, got &quot;7.5.0&quot;
+error &quot;@storybook/addon-docs#@mdx-js/mdx#@babel/core#@babel/generator#@babel/types#@babel/helper-validator-identifier&quot; not installed
+error &quot;@storybook/addon-docs#@mdx-js/mdx#@babel/core#@babel/traverse#@babel/helper-hoist-variables&quot; is wrong version: expected &quot;^7.16.0&quot;, got &quot;7.4.4&quot;
+error &quot;@storybook/addon-docs#@mdx-js/mdx#@babel/core#@babel/traverse#@babel/helper-split-export-declaration&quot; is wrong version: expected &quot;^7.16.0&quot;, got &quot;7.4.4&quot;
+error &quot;@storybook/addon-docs#@mdx-js/mdx#remark-mdx#@babel/core#@babel/types#@babel/helper-validator-identifier&quot; not installed
+error &quot;@storybook/addon-docs#@mdx-js/mdx#remark-mdx#@babel/core#@babel/generator#@babel/types#@babel/helper-validator-identifier&quot; not installed
+error Found 12 errors.</code></pre>
+<p>Going to try a fresh <code>bin/reload</code>.</p>
+<p>11:33 Reload seems to have worked.</p>
+<p>11:47 And success! We have a Hello World! Titan is rendering from within Invoca/WEB! 🎉</p>
+<hr />
+<p>References:</p>
+</body>
+</html>
